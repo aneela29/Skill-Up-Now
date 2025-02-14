@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+    <head>
+        <meta charset="utf-8">
+        <title>Skill Up Now </title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="" name="keywords">
+        <meta content="" name="description">
+    
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+    
+        <!-- Google Web Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    
+        <!-- Icon Font Stylesheet -->
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+        <!-- Libraries Stylesheet -->
+        <link href="{% static 'animate/animate.min.css ' %}" rel="stylesheet">
+        <link href="{% static 'owlcarousel/assets/owl.carousel.min.css ' %}" rel="stylesheet">
+    
+        <!-- Customized Bootstrap Stylesheet -->
+        <link href="{% static 'bootstrap.min.css ' %}" rel="stylesheet">
+    
+        <!-- Template Stylesheet -->
+        <link href="{% static 'style.css ' %}" rel="stylesheet">
+    </head>
+    <body>
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+    
+    
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+            <a href="{% url 'index' %}" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+                <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Skill Up Now</h2>
+            </a>
+            <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto p-4 p-lg-0">
+                    <a href= "{% url 'index' %}" class="nav-item nav-link active">Home</a>
+                    <a href= "{% url 'about' %}" class="nav-item nav-link">About</a>
+                    <div class="nav-item dropdown">
+                    <a href="" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Courses</a>
+                    <div class="dropdown-menu fade-down m-0">
+                        <a href="{% url 'gameDeb' %}" class="dropdown-item">Game Developement</a>
+                        <a href="{% url 'graphic' %}" class="dropdown-item">Graphic Design</a>
+                        <a href="{% url 'marketing' %}" class="dropdown-item">Online Marketing</a>
+                    
+                    </div>
+                </div>    
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                        <div class="dropdown-menu fade-down m-0">
+                            <a href="{% url 'testimonial' %}" class="dropdown-item">Testimonial</a>
+                            
+                        </div>
+                    </div>
+                    <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                </div>
+                <a href="{% url 'cart' %}" class="nav-item nav-link {% if request.path == '/cart/' %}active{% endif %}">
+                    <i class="fas fa-shopping-cart"></i> Cart
+                    {% if cart_item_count > 0 %}
+                        <span class="badge bg-danger">{{ cart_item_count }}</span>
+                    {% endif %}
+                </a>
+                {% if user.is_authenticated %}
+                    <!-- If user is logged in, show the logout button -->
+                    <form method="POST" action="{% url 'logout' %}" style="display: inline;">
+                       {% csrf_token %}
+                       <button type="submit" class="btn btn-primary rounded-pill py-2 px-4">Logout</button>
+                    </form>
+                {% else %}
+                    <!-- If user is not logged in, show the register button -->
+                    <form method="POST" action="{% url 'signin' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary rounded-pill py-2 px-4">Join Now</button>
+                     </form>
+                {% endif %}           
+            </div>
+        </nav>
+        <!-- Navbar End -->
+    
+        <!-- Header Start -->
+        <div class="container-fluid bg-primary py-5 mb-5 page-header">
+            <div class="container py-5">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 text-center">
+                        <h1 class="display-3 text-white animated slideInDown"> Graphic Design </h1>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb justify-content-center">
+                                <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                                <li class="breadcrumb-item text-white active" aria-current="page">course details</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Header End -->
+        <!-- Course Detail Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <div class="row">
+                    <div class="col-lg-7 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                        <div class="mb-5">                
+                            <h3 class="d-inline-block position-relative text-secondary text-uppercase pb-2">Course Details</h3>
+                            <h1 class="display-4">Graphic Design course for beginners</h1>
+                            
+                            <img class="img-fluid rounded w-100 mb-4" src="{% static 'graphic.jpg ' %}" alt="Image">
+                        
+                            <p>Graphic Designing is one of most demandable process of discovering new opportunities to expand your business.
+                             It focuses on identifying untapped markets, enhancing customer outreach, and crafting tailored strategies to grow your brand presence.
+                              By leveraging data-driven insights and innovative approaches, marketing development helps businesses thrive in competitive landscapes.</p>
+    
+                            <p>By learning marketing development, you'll master the skills to identify new market opportunities, create effective growth strategies, and expand brand presence.
+                                 Our course equips you with hands-on tools and real-world insights to drive business success. 
+                                Gain a competitive edge in today’s dynamic market and open doors to career growth, higher earning potential, and expertise that’s in demand across industries.</p>
+                        </div>
+                    
+                        <h2 class="mb-3">What you will get from this course?</h2>
+                        <div>
+                                <img class="img-fluid w-100 mb-4" width="3000" src="{% static 'graphic1.jpg ' %}" alt="">
+                                
+                                <div class="courses-text">
+                                    <p>In this "Graphic Designing Development for Beginnerss" course, students will get:</p>
+    
+                                <h5>1. Foundational Knowledge:</h5> An introduction to marketing development concepts, essential skills in market research, competitive analysis, and strategy formulation to drive business growth.
+                                    <h5>2. Hands-on Learning:</h5> Practical experience through real-world projects, case studies, and interactive exercises to apply theoretical concepts effectively.
+                                    <h5>3. Programming Basics:</h5> Basic programming knowledge enhances marketing development by enabling effective data analysis, automation of tasks, and better management of digital marketing tools.
+                                    <h5>4. Consume insights:</h5> Students will also learn how to analyze consumer behavior and market trends, enabling them to create targeted marketing strategies that drive engagement and growth.
+                                    <h5>5. Project Development:</h5> Learn to design and execute marketing projects effectively, enabling them to drive results and contribute to their organization's strategic objectives.
+                                    <h5>6. Monetization and Publishing:</h5> Generating revenue through effective content strategies and distributing it across platforms to engage and attract target audiences.
+                                        
+                                    <p>This course will provide a strong foundation for beginners to start creating their own marketing project and exploring the marketing industry.
+                                    Also they will get these awesome features:</p>    
+                                </div>
+                                <div class="row gy-2 gx-4 mb-4">
+                                    <div class="col-sm-6">
+                                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Skilled Instructors</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Online Classes</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>International Certificate</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Home Project Submission</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Book Library</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Course Review and Feedback</p>
+                                    </div>
+                                </div>
+                        </div>
+                   </div>
+                
+                    <div class="col-lg-5 mt-6 mt-lg-0">
+                        <div class="bg-primary mb-5 py-3">
+                            <h3 class="text-white py-3 px-4 m-0"> Course Features</h3>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Instructor</h6>
+                                <h6 class="text-white my-3">Aneela Ahmed Helali</h6>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Profession</h6>
+                                <h6 class="text-white my-3">Senior Graphic Designer</h6>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Experience</h6>
+                                <h6 class="text-white my-3">06 years</h6>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Rating</h6>
+                                <h6 class="text-white my-3">5.5 <small>(250)</small></h6>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Lectures</h6>
+                                <h6 class="text-white my-3">28</h6>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Duration</h6>
+                                <h6 class="text-white my-3">12.00 Hrs</h6>
+                            </div>
+                            <div class="d-flex justify-content-between border-bottom px-4">
+                                <h6 class="text-white my-3">Skill level</h6>
+                                <h6 class="text-white my-3">All Level</h6>
+                            </div>
+                            <div class="d-flex justify-content-between px-4">
+                                <h6 class="text-white my-3">Language</h6>
+                                <h6 class="text-white my-3">English,Bangla,Arabic</h6>
+                            </div>
+                            
+                            <h5 class="text-white py-3 px-4 m-0">Course Price: 999 BDT</h5>
+                            <div class="py-3 px-4">
+                                <a class="btn btn-block btn-secondary py-3 px-5" href="{% url 'signup' %}">Enroll Now</a>
+                            </div>
+                        </div>
+    
+                        <div class="mb-5">
+                            <h2 class="mb-3">Categories</h2>
+                            <ul class="list-group list-group-flush">
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <a href="" class="text-decoration-none h6 m-0">Online Marketing & Development</a>
+                                    <span>25</span>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <a href="" class="text-decoration-none h6 m-0">Game Design & Developement</a>
+                                    <span>40</span>
+                                </li>
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                    <a href="" class="text-decoration-none h6 m-0">Graphic Design & Development</a>
+                                    <span>30</span>
+                                </li>
+                            </ul>
+                        </div>
+    
+                        <div>
+                            <h2>Recent Courses</h2>
+                            <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                                <img class="img-fluid rounded" src="{% static 'courses-80x80.jpg ' %}" alt="">
+                                <div class="px-lg-3">
+                                    <h6>Game design & development courses for beginners</h6>
+                                    <div class="d-flex">
+                                        <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Nusrat Fathema Shuravi</small>
+                                        <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>5.6 (250)</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                                <img class="img-fluid rounded" src="{% static 'courses-80x80.jpg ' %}" alt="">
+                                <div class="px-lg-3">
+                                    <h6>Online Marketing & development courses for beginners</h6>
+                                    <div class="d-flex">
+                                        <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Mumtasin Alam Suporna</small>
+                                        <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>6.5 (250)</small>
+                                    </div>
+                                </div>
+                            </a>
+                            <a class="d-flex align-items-center text-decoration-none mb-4" href="">
+                                <img class="img-fluid rounded" src="{% static 'courses-80x80.jpg ' %}" alt="">
+                                <div class="px-lg-3">
+                                    <h6>Graphic design & development courses for beginners</h6>
+                                    <div class="d-flex">
+                                        <small class="text-body mr-3"><i class="fa fa-user text-primary mr-2"></i>Aneela Ahmed Helali</small>
+                                        <small class="text-body"><i class="fa fa-star text-primary mr-2"></i>5.5 (250)</small>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Detail End -->
+         
+    
+        <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+            <div class="container py-5">
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-white mb-3">Quick Link</h4>
+                        <a class="btn btn-link" href="{% url 'about' %}">About Us</a>
+                        <a class="btn btn-link" href="{% url 'contact' %}">Contact Us</a>
+                        <a class="btn btn-link" href="{% url 'contact' %}">FAQs & Help</a>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-white mb-3">Contact</h4>
+                        <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>International Islamic University Chittagong Kumira, Chattogram-4318, Bangladesh</p>
+                        <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+8809613230505</p>
+                        <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@skillUPnow.com</p>
+                        <div class="d-flex pt-2">
+                            
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                           
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-white mb-3">Gallery</h4>
+                        <div class="row g-2 pt-2">
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{% static 'pic1.avif ' %}"alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{% static 'course-2.avif ' %}" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{% static 'pic2.avif ' %}" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{% static 'pic3.avif ' %}" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{% static 'course-1.avif ' %}" alt="">
+                            </div>
+                            <div class="col-4">
+                                <img class="img-fluid bg-light p-1" src="{% static 'pic4.avif ' %}" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="text-white mb-3">NewsUpdate</h4>
+                        <p>Sign up for receiving our updates on new courses, special offers, and the latest industry insights directly to your inbox!</p>
+                        <div class="position-relative mx-auto" style="max-width: 400px;">
+                            <input class="form-control border-0 w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                            <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="copyright">
+                    <div class="row">
+                        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                            &copy; <a class="border-bottom" href="{% url 'index' %}">Skill Up Now</a>, All Right Reserved.
+    
+                            
+                            Designed By <a>Shuravi, Aneela, Mumtasin.</a><br><br>
+                            Distributed By <a>SAM Coders</a>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <div class="footer-menu">
+                                <a href="{% url 'index' %}">Home</a>
+                                <a href="{% url 'contact' %}">Help & FQAs</a>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'wow/wow.min.js ' %}"></script>
+        <script src="{% static 'easing/easing.min.js ' %}"></script>
+        <script src="{% static 'waypoints/waypoints.min.js ' %}"></script>
+        <script src="{% static 'owlcarousel/owl.carousel.min.js ' %}"></script>
+    
+        <!-- Template Javascript -->
+        <script src="{% static 'main.js ' %}"></script>
+    </body>
+    
+    </html>
